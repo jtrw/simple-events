@@ -7,10 +7,12 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class EventManager implements EventManagerInterface
 {
     protected EventDispatcher $dispatcher;
+    protected ?QueueInterface $queue;
     
-    public function __construct()
+    public function __construct(QueueInterface $queue = null)
     {
         $this->dispatcher = new EventDispatcher();
+        $this->queue = $queue;
     } // end __construct
     
     public function fireHook(string $name, array $data)
@@ -29,4 +31,9 @@ class EventManager implements EventManagerInterface
     {
         $this->dispatcher->addListener($name, $listener, $priority);
     } // end addListener
+    
+    public function addQueue(object $job)
+    {
+        return $this->queue->add($job);
+    } // end addQueue
 }
