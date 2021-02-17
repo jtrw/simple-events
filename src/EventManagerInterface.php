@@ -9,4 +9,5 @@ interface EventManagerInterface
     public function fireHook(string $name, array $data);
     public function dispatch(string $name, StoppableEventInterface $event);
     public function addListener(string $name, array $listener, int $priority = 0);
+    public function addQueue(object $job);
 }
